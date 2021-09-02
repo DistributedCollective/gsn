@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 import { HttpProvider } from 'web3-core'
-import { toBN, toHex } from 'web3-utils'
+import { toBN as web3_toBN, toHex } from 'web3-utils'
 import BN from 'bn.js'
 
 import { ContractInteractor } from '@opengsn/common/dist/ContractInteractor'
@@ -25,6 +25,7 @@ import chai from 'chai'
 import sinonChai from 'sinon-chai'
 import chaiAsPromised from 'chai-as-promised'
 
+const toBN = web3_toBN as any
 const { oneEther } = constants
 
 const { expect } = chai.use(chaiAsPromised)

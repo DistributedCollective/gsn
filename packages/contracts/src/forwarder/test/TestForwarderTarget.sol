@@ -19,7 +19,7 @@ contract TestForwarderTarget is BaseRelayRecipient {
     function emitMessage(string memory message) public {
 
         // solhint-disable-next-line avoid-tx-origin
-        emit TestForwarderMessage(message, _msgData(), _msgSender(), msg.sender, tx.origin);
+        emit TestForwarderMessage(message, _msgData(), _msgSender(), msg.sender, address(0) /*tx.origin*/ );
     }
 
     function publicMsgSender() public view returns (address) {

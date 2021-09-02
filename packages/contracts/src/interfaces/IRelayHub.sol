@@ -5,6 +5,24 @@ pragma abicoder v2;
 import "../utils/GsnTypes.sol";
 import "./IStakeManager.sol";
 
+
+/// Reason error codes for the TransactionRelayed event
+/// @param OK - the transaction was successfully relayed and execution successful - never included in the event
+/// @param RelayedCallFailed - the transaction was relayed, but the relayed call failed
+/// @param RejectedByPreRelayed - the transaction was not relayed due to preRelatedCall reverting
+/// @param RejectedByForwarder - the transaction was not relayed due to forwarder check (signature,nonce)
+/// @param PostRelayedFailed - the transaction was relayed and reverted due to postRelatedCall reverting
+/// @param PaymasterBalanceChanged - the transaction was relayed and reverted due to the paymaster balance change
+enum RelayCallStatus {
+    OK,
+    RelayedCallFailed,
+    RejectedByPreRelayed,
+    RejectedByForwarder,
+    RejectedByRecipientRevert,
+    PostRelayedFailed,
+    PaymasterBalanceChanged
+}
+
 interface IRelayHub {
     struct RelayHubConfig {
         // maximum number of worker accounts allowed per manager
@@ -95,23 +113,6 @@ interface IRelayHub {
     );
 
     event HubDeprecated(uint256 fromBlock);
-
-    /// Reason error codes for the TransactionRelayed event
-    /// @param OK - the transaction was successfully relayed and execution successful - never included in the event
-    /// @param RelayedCallFailed - the transaction was relayed, but the relayed call failed
-    /// @param RejectedByPreRelayed - the transaction was not relayed due to preRelatedCall reverting
-    /// @param RejectedByForwarder - the transaction was not relayed due to forwarder check (signature,nonce)
-    /// @param PostRelayedFailed - the transaction was relayed and reverted due to postRelatedCall reverting
-    /// @param PaymasterBalanceChanged - the transaction was relayed and reverted due to the paymaster balance change
-    enum RelayCallStatus {
-        OK,
-        RelayedCallFailed,
-        RejectedByPreRelayed,
-        RejectedByForwarder,
-        RejectedByRecipientRevert,
-        PostRelayedFailed,
-        PaymasterBalanceChanged
-    }
 
     /// Add new worker addresses controlled by sender who must be a staked Relay Manager address.
     /// Emits a RelayWorkersAdded event.

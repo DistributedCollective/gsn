@@ -6,7 +6,7 @@ module.exports = {
   contracts_directory: './src',
   compilers: {
     solc: {
-      version: '0.7.6',
+      version: "../../node_modules/@eth-optimism/solc",
       settings: {
         evmVersion: 'istanbul',
         optimizer: {

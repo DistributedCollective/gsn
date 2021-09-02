@@ -12,6 +12,9 @@ import { bufferToHex, privateToAddress, toBuffer } from 'ethereumjs-util'
 import { ether, expectRevert } from '@openzeppelin/test-helpers'
 import { toChecksumAddress } from 'web3-utils'
 import { DomainRegistered, RequestTypeRegistered } from '@opengsn/contracts/types/truffle-contracts/IForwarder'
+import '../TruffleArtifacts'
+import { Contract } from 'web3-eth-contract'
+
 require('source-map-support').install({ errorFormatterForce: true })
 
 const TestForwarderTarget = artifacts.require('TestForwarderTarget')
@@ -61,10 +64,10 @@ contract('Forwarder', ([from]) => {
 
   const senderPrivateKey = toBuffer(bytes32(1))
   const senderAddress = toChecksumAddress(bufferToHex(privateToAddress(senderPrivateKey)))
-
   before(async () => {
-    fwd = await Forwarder.new()
-    tf = await TestForwarder.new()
+    console.log( 'defaults=', (Forwarder as any).defaults())
+    fwd = await Forwarder.new({from})
+    tf = await TestForwarder.new({from})
     chainId = (await tf.getChainId()).toNumber()
     assert.equal(await fwd.GENERIC_PARAMS(), GENERIC_PARAMS)
   })

@@ -14,10 +14,12 @@ import { PrefixedHexString } from 'ethereumjs-tx'
 import { isSameAddress, sleep } from '@opengsn/common/dist/Utils'
 import { RelayHubConfiguration } from '@opengsn/common/dist/types/RelayHubConfiguration'
 import { createServerLogger } from '@opengsn/relay/dist/ServerWinstonLogger'
+import './TruffleArtifacts.js'
 
 require('source-map-support').install({ errorFormatterForce: true })
 
 const RelayHub = artifacts.require('RelayHub')
+const InnerRelayHub = artifacts.require('InnerRelayHub')
 
 const localhostOne = 'http://localhost:8090'
 
@@ -261,18 +263,22 @@ export async function deployHub (
     ...defaultEnvironment.relayHubConfiguration,
     ...configOverride
   }
+  //@ts-ignore
   const hub: RelayHubInstance = await RelayHub.new(
+    stakeManager, //TODO: should be InnerRelayHub..
     stakeManager,
     penalizer,
-    relayHubConfiguration.maxWorkerCount,
-    relayHubConfiguration.gasReserve,
-    relayHubConfiguration.postOverhead,
-    relayHubConfiguration.gasOverhead,
-    relayHubConfiguration.maximumRecipientDeposit,
-    relayHubConfiguration.minimumUnstakeDelay,
-    relayHubConfiguration.minimumStake,
-    relayHubConfiguration.dataGasCostPerByte,
-    relayHubConfiguration.externalCallDataCostOverhead)
+    relayHubConfiguration,
+    // relayHubConfiguration.maxWorkerCount,
+    // relayHubConfiguration.gasReserve,
+    // relayHubConfiguration.postOverhead,
+    // relayHubConfiguration.gasOverhead,
+    // relayHubConfiguration.maximumRecipientDeposit,
+    // relayHubConfiguration.minimumUnstakeDelay,
+    // relayHubConfiguration.minimumStake,
+    // relayHubConfiguration.dataGasCostPerByte,
+    // relayHubConfiguration.externalCallDataCostOverhead, 
+    {gas:467110000, gasPrice: 15000000})
   return hub
 }
 

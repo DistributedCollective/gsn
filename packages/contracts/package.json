@@ -17,7 +17,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^3.4.0-solc-0.7"
+    "@eth-optimism/core-utils": "^0.5.3",
+    "@eth-optimism/plugins": "^1.0.0-alpha.3",
+    "@eth-optimism/solc": "^0.7.6-alpha.1",
+    "@openzeppelin/contracts": "^3.4.0-solc-0.7",
+    "add": "^2.0.6",
+    "yarn": "^1.22.11"
   },
   "devDependencies": {
     "solhint": "^3.3.2"

@@ -46,7 +46,7 @@ contract TestRecipient is BaseRelayRecipient {
             withdrawAllBalance();
         }
 
-        emit SampleRecipientEmitted(message, _msgSender(), msg.sender, tx.origin, msg.value, gasLeft, address(this).balance);
+        emit SampleRecipientEmitted(message, _msgSender(), msg.sender, address(0) /*tx.origin*/, msg.value, gasLeft, 0 /*address(this).balance*/ );
         return "emitMessage return value";
     }
 
@@ -58,7 +58,7 @@ contract TestRecipient is BaseRelayRecipient {
     function dontEmitMessage(string calldata message) public {}
 
     function emitMessageNoParams() public {
-        emit SampleRecipientEmitted("Method with no parameters", _msgSender(), msg.sender, tx.origin, 0, gasleft(), address(this).balance);
+        emit SampleRecipientEmitted("Method with no parameters", _msgSender(), msg.sender, address(0) /*tx.origin*/, 0, gasleft(), 0 /*address(this).balance*/ );
     }
 
     //return (or revert) with a string in the given length

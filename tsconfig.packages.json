@@ -3,6 +3,9 @@
     "**/node_modules",
     "**/dist"
   ],
+  "ts-node": {
+    "transpileOnly": true
+  },
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "composite": true,

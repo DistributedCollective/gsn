@@ -31,6 +31,13 @@ module.exports = {
       port: 8544,
       network_id: '*'
     },
+    //dev network (but with hdwallet)
+    dev: {
+      provider: function () {
+        return new HDWalletProvider(mnemonic, 'http://localhost:8545')
+      },
+      network_id: '*'
+    },
     mainnet: {
       provider: function () {
         return new HDWalletProvider(mnemonic, 'https://mainnet.infura.io/v3/f40be2b1a3914db682491dc62a19ad43')
@@ -85,7 +92,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: '0.7.6',
+      version: "../../node_modules/@eth-optimism/solc",
       settings: {
         evmVersion: 'istanbul',
         optimizer: {

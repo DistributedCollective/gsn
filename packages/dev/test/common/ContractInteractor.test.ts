@@ -42,15 +42,24 @@ contract('ContractInteractor', function (accounts) {
   let pm: TestPaymasterConfigurableMisbehaviorInstance
 
   before(async () => {
-    sm = await StakeManager.new(defaultEnvironment.maxUnstakeDelay)
+    console.log(1)
+    sm = await StakeManager.new(defaultEnvironment.maxUnstakeDelay, {gas: 1e6, gasPrice: 1e3})
+    console.log(2)
     pen = await Penalizer.new(defaultEnvironment.penalizerConfiguration.penalizeBlockDelay, defaultEnvironment.penalizerConfiguration.penalizeBlockExpiration)
+    console.log(3)
     rh = await deployHub(sm.address, pen.address)
+    console.log(4)
     pm = await TestPaymasterConfigurableMisbehavior.new()
+    console.log(5)
     await pm.setRelayHub(rh.address)
+    console.log(6)
     const mgrAddress = accounts[1]
     await sm.setRelayManagerOwner(accounts[0], { from: mgrAddress })
     await sm.stakeForRelayManager(mgrAddress, 1000, { value: 1e18.toString() })
     await sm.authorizeHubByOwner(mgrAddress, rh.address)
+    console.log( 'est gas:')
+    console.log(await rh.addRelayWorkers.estimateGas([workerAddress], { from: accounts[3], gas: 10e6 }))
+
     await rh.addRelayWorkers([workerAddress], { from: mgrAddress })
   })
 

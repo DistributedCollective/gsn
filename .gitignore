@@ -38,3 +38,6 @@ yarn-error.log
 /.yarnrc
 /build/gsn
 /gsn.iml
+/packages/contracts/build-opt/
+/packages/dev/artifacts-ovm
+/packages/dev/cache-ovm/
