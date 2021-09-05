@@ -18,7 +18,10 @@ import { PrefixedHexString } from 'ethereumjs-tx'
 import { bufferToHex } from 'ethereumjs-util'
 import { encodeRevertReason } from '../TestUtils'
 import { DomainRegistered, RequestTypeRegistered } from '@opengsn/contracts/types/truffle-contracts/IForwarder'
-import '../TruffleArtifacts'
+
+if (process.env.OPT != null) {
+  require('../src/TruffleArtifacts')
+}
 
 require('source-map-support').install({ errorFormatterForce: true })
 
@@ -28,9 +31,7 @@ const TestUtil = artifacts.require('TestUtil')
 const Forwarder = artifacts.require('Forwarder')
 const TestRecipient = artifacts.require('TestRecipient')
 
-//@ts-ignore
-console.log( '=== utils conteract=', global.contract)
-//@ts-ignore
+// @ts-ignore
 global.contract('Utils', function (accounts) {
   describe('#getEip712Signature()', function () {
     // ganache always reports chainId as '1'

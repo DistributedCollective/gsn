@@ -10,6 +10,8 @@ if (fs.existsSync(secretMnemonicFile)) {
   secretMnemonic = fs.readFileSync(secretMnemonicFile, { encoding: 'utf8' })
 }
 
+const opt = process.env.OPT
+
 module.exports = {
   networks: {
 
@@ -92,7 +94,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: "../../node_modules/@eth-optimism/solc",
+      version: opt ? '../../node_modules/@eth-optimism/solc' : '0.7.6',
       settings: {
         evmVersion: 'istanbul',
         optimizer: {

@@ -12,8 +12,9 @@ import { bufferToHex, privateToAddress, toBuffer } from 'ethereumjs-util'
 import { ether, expectRevert } from '@openzeppelin/test-helpers'
 import { toChecksumAddress } from 'web3-utils'
 import { DomainRegistered, RequestTypeRegistered } from '@opengsn/contracts/types/truffle-contracts/IForwarder'
-import '../TruffleArtifacts'
-import { Contract } from 'web3-eth-contract'
+
+if (process.env.OPT != null) {
+  require('../src/TruffleArtifacts')
 
 require('source-map-support').install({ errorFormatterForce: true })
 
@@ -320,6 +321,7 @@ contract('Forwarder', ([from]) => {
       assert.equal(calcTypeHash, typeHash)
 
       recipient = await TestForwarderTarget.new(fwd.address)
+      console.log('== defaults=', (TestForwarder as any).defaults())
       testfwd = await TestForwarder.new()
 
       const ret = await fwd.registerDomainSeparator(data.domain.name!, data.domain.version!)

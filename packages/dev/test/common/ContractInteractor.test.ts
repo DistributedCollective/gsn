@@ -43,7 +43,7 @@ contract('ContractInteractor', function (accounts) {
 
   before(async () => {
     console.log(1)
-    sm = await StakeManager.new(defaultEnvironment.maxUnstakeDelay, {gas: 1e6, gasPrice: 1e3})
+    sm = await StakeManager.new(defaultEnvironment.maxUnstakeDelay, {gas: 6e6, gasPrice: 1e3})
     console.log(2)
     pen = await Penalizer.new(defaultEnvironment.penalizerConfiguration.penalizeBlockDelay, defaultEnvironment.penalizerConfiguration.penalizeBlockExpiration)
     console.log(3)
@@ -55,12 +55,20 @@ contract('ContractInteractor', function (accounts) {
     console.log(6)
     const mgrAddress = accounts[1]
     await sm.setRelayManagerOwner(accounts[0], { from: mgrAddress })
+    console.log(7)
+
     await sm.stakeForRelayManager(mgrAddress, 1000, { value: 1e18.toString() })
+    console.log(8)
+
     await sm.authorizeHubByOwner(mgrAddress, rh.address)
-    console.log( 'est gas:')
-    console.log(await rh.addRelayWorkers.estimateGas([workerAddress], { from: accounts[3], gas: 10e6 }))
+    // console.log( 'est gas:')
+    // console.log(await rh.addRelayWorkers.estimateGas([workerAddress], { from: accounts[3], gas: 10e6 }))
+
+    console.log(9)
 
     await rh.addRelayWorkers([workerAddress], { from: mgrAddress })
+    console.log(10)
+
   })
 
   function addr (n: number): string {

@@ -14,7 +14,10 @@ import { PrefixedHexString } from 'ethereumjs-tx'
 import { isSameAddress, sleep } from '@opengsn/common/dist/Utils'
 import { RelayHubConfiguration } from '@opengsn/common/dist/types/RelayHubConfiguration'
 import { createServerLogger } from '@opengsn/relay/dist/ServerWinstonLogger'
-import './TruffleArtifacts.js'
+
+if (process.env.OPT != null) {
+  require('../src/TruffleArtifacts')
+}
 
 require('source-map-support').install({ errorFormatterForce: true })
 
@@ -263,6 +266,13 @@ export async function deployHub (
     ...defaultEnvironment.relayHubConfiguration,
     ...configOverride
   }
+  let blockmeta: any = { gas: 10e6 }
+  if (process.env.OPT != null) {
+    blockmeta = {
+      gas: 467110000,
+      gasPrice: 15000000
+    }
+  }
   const innerHub = await InnerRelayHub.new()
   //@ts-ignore
   const hub: RelayHubInstance = await RelayHub.new(
@@ -278,8 +288,8 @@ export async function deployHub (
     // relayHubConfiguration.minimumUnstakeDelay,
     // relayHubConfiguration.minimumStake,
     // relayHubConfiguration.dataGasCostPerByte,
-    // relayHubConfiguration.externalCallDataCostOverhead, 
-    {gas:467110000, gasPrice: 15000000})
+    // relayHubConfiguration.externalCallDataCostOverhead,
+    blockmeta)
   await innerHub.setRelayHub(hub.address)
 
   return hub
