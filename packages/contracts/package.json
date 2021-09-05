@@ -6,7 +6,8 @@
   "scripts": {
     "truffle-compile": "truffle compile --compile-all",
     "typechain-generate": "yarn truffle-compile && typechain --target truffle-v5 '../cli/src/compiled/*.json'",
-    "lint": "solhint -f unix \"src/**/*.sol\" --max-warnings 0"
+    "lint": "solhint -f unix \"src/**/*.sol\" --max-warnings 0",
+    "tsc-watch": "chokidar \"src/**/*.sol\" -c \"yarn run typechain-generate\""
   },
   "files": [
     "src/*",
@@ -22,6 +23,7 @@
     "@eth-optimism/solc": "^0.7.6-alpha.1",
     "@openzeppelin/contracts": "^3.4.0-solc-0.7",
     "add": "^2.0.6",
+    "chokidar-cli": "^3.0.0",
     "yarn": "^1.22.11"
   },
   "devDependencies": {

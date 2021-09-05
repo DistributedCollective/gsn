@@ -12,6 +12,7 @@
   },
   "scripts": {
     "tsc": "tsc",
+    "tsc-watch": "tsc -w",
     "truffle-compile": "truffle compile",
     "lint": "eslint -f unix .",
     "test": "lerna run tsc && truffle --compile-all --network npmtest test",
