@@ -263,9 +263,10 @@ export async function deployHub (
     ...defaultEnvironment.relayHubConfiguration,
     ...configOverride
   }
+  const innerHub = await InnerRelayHub.new()
   //@ts-ignore
   const hub: RelayHubInstance = await RelayHub.new(
-    stakeManager, //TODO: should be InnerRelayHub..
+    innerHub.address,
     stakeManager,
     penalizer,
     relayHubConfiguration,
@@ -279,6 +280,8 @@ export async function deployHub (
     // relayHubConfiguration.dataGasCostPerByte,
     // relayHubConfiguration.externalCallDataCostOverhead, 
     {gas:467110000, gasPrice: 15000000})
+  await innerHub.setRelayHub(hub.address)
+
   return hub
 }
 

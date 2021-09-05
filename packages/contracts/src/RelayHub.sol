@@ -58,7 +58,7 @@ contract RelayHub is IRelayHub, Ownable {
         InnerRelayHub _innerRelayHub,
         IStakeManager _stakeManager,
         address _penalizer,
-        RelayHubConfig memory config
+        RelayHubConfig memory _config
         // uint256 _maxWorkerCount,
         // uint256 _gasReserve,
         // uint256 _postOverhead,
@@ -72,7 +72,7 @@ contract RelayHub is IRelayHub, Ownable {
         innerRelayHub = _innerRelayHub;
         stakeManager = _stakeManager;
         penalizer = _penalizer;
-        setConfiguration(config);
+        setConfiguration(_config);
         // RelayHubConfig(
         //     _maxWorkerCount,
         //     _gasReserve,
@@ -251,6 +251,7 @@ contract RelayHub is IRelayHub, Ownable {
                 vars.maxPossibleGas
                 )
         );
+
         vars.success = success;
         vars.innerGasUsed = vars.gasBeforeInner-gasleft();
         (vars.status, vars.relayedCallReturnValue) = abi.decode(relayCallStatus, (RelayCallStatus, bytes));
